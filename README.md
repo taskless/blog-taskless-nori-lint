@@ -17,7 +17,7 @@ npm run compare    # nori-lint and Taskless over corpus/skills/, side by side
 npm run test:rules # the rules' own fixtures
 ```
 
-`node scripts/compare.mjs --diff <rule>` lists the files the two tools disagree on for one nori-lint rule. nori-lint 0.4.0 and Taskless 0.12.0 are pinned in `package.json`.
+`npm run bench` times both tools as whole processes, startup included. `node scripts/compare.mjs --diff <rule>` lists the files the two tools disagree on for one nori-lint rule. nori-lint 0.4.0 and Taskless 0.12.0 are pinned in `package.json`.
 
 ## The rules
 
@@ -99,4 +99,4 @@ Every skill in the corpus was written and published by the teams and people in t
 
 ## Credit
 
-The rules, their thresholds and the reasoning behind them are nori-lint's. The two scripts follow its scanning logic. nori-lint is Copyright Tilework Tech and licensed under the [Apache License 2.0](https://github.com/tilework-tech/nori-lint/blob/main/LICENSE). This repo is MIT.
+The rules, their thresholds and the reasoning behind them are nori-lint's. The two scripts follow its scanning logic. nori-lint is Copyright 2026 Tilework Tech Inc. and licensed under the [Apache License 2.0](https://github.com/tilework-tech/nori-lint/blob/main/LICENSE). This repo is MIT.

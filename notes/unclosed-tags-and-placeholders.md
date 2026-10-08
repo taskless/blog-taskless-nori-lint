@@ -7,7 +7,7 @@ The tags it reports most often:
 | Tag | Files |
 | --- | --- |
 | `<specific_credential>` | 95 |
-| `<Client>` (from `Client<T>`) | 34 |
+| `<Client>` (as in ``async with `<Client>(...)` as client``) | 34 |
 | `<resource>` | 31 |
 | `<name>` | 26 |
 | `<account>` | 23 |

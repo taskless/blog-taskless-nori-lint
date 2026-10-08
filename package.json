@@ -6,7 +6,8 @@
   "scripts": {
     "corpus": "corpus/fetch.sh",
     "compare": "node scripts/compare.mjs",
-    "test:rules": "taskless test .taskless/rules"
+    "test:rules": "taskless test .taskless/rules",
+    "bench": "node scripts/bench.mjs"
   },
   "devDependencies": {
     "@taskless/cli": "0.12.0",

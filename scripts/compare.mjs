@@ -47,7 +47,6 @@ const files = globSync("**/SKILL.md", { cwd: root, dot: true }).sort();
 // nori-lint: every static rule on every file.
 const nori = new Map(); // rule -> Map(file -> findings)
 const rules = defaultRegistry().rules;
-const t0 = performance.now();
 for (const rel of files) {
   const input = fs.readFileSync(path.join(root, rel), "utf8");
   for (const rule of rules) {
@@ -57,17 +56,14 @@ for (const rel of files) {
     nori.get(rule.name).set(rel, n);
   }
 }
-const noriMs = performance.now() - t0;
 
 // Taskless: one check over the directory.
-const t1 = performance.now();
 let out;
 try {
   out = execFileSync("npx", ["--no", "taskless", "check", root, "--json"], { encoding: "utf8", maxBuffer: 1 << 28 });
 } catch (e) {
   out = e.stdout; // check exits non-zero when it finds errors
 }
-const taskMs = performance.now() - t1;
 const report = JSON.parse(out);
 if (report.failures) throw new Error(`taskless check failed: ${JSON.stringify(report.failures)}`);
 
@@ -123,4 +119,3 @@ for (const [id, m] of extra) {
 }
 const agree = rows.filter((r) => r.noriOnly === 0 && r.tasklessOnly === 0).length;
 console.log(`\n${agree} of ${rows.length} rules agree on every file.`);
-console.log(`nori-lint ${noriMs.toFixed(0)} ms in-process, Taskless check ${taskMs.toFixed(0)} ms including npx startup.`);
