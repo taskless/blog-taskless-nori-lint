@@ -1,0 +1,6 @@
+extends: existence
+message: "Markdown link syntax. Write the bare URL, the reader is an LLM."
+level: warning
+scope: raw
+raw:
+  - '(?<!!)\[[^\]\n]+\]\([^)\s]+\)'

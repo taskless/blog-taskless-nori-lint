@@ -1,0 +1,6 @@
+extends: existence
+message: "The skill opens with a title heading. The name in the frontmatter already says it."
+level: warning
+scope: raw
+raw:
+  - '\A(?:---[ \t]*\n(?:[^\n]*\n)*?---[ \t]*\n)?(?:[ \t]*\n)*(?:#[^\n]*|[^\n]*\S[^\n]*\n[ \t]*(?:=+|-+)[ \t]*(?:\n|\z))'
