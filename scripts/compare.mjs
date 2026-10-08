@@ -57,7 +57,7 @@ const noriMs = performance.now() - t0;
 const t1 = performance.now();
 let out;
 try {
-  out = execFileSync("npx", ["taskless", "check", root, "--json"], { encoding: "utf8", maxBuffer: 1 << 28 });
+  out = execFileSync("npx", ["--no", "taskless", "check", root, "--json"], { encoding: "utf8", maxBuffer: 1 << 28 });
 } catch (e) {
   out = e.stdout; // check exits non-zero when it finds errors
 }
