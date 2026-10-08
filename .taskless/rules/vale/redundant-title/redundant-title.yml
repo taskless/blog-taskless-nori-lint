@@ -3,4 +3,4 @@ message: "The skill opens with a title heading. The name in the frontmatter alre
 level: warning
 scope: raw
 raw:
-  - '\A(?:---[ \t]*\n(?:[^\n]*\n)*?---[ \t]*\n)?(?:[ \t]*\n)*(?:#[^\n]*|[^\n]*\S[^\n]*\n[ \t]*(?:=+|-+)[ \t]*(?:\n|\z))'
+  - '\A(?:---[ \t]*\n(?:(?!---[ \t]*\n)[^\n]*\n)*?---[ \t]*\n)?(?:[ \t]*\n)*(?:#[^\n]*|[^\n]*\S[^\n]*\n[ \t]*(?:=+|-+)[ \t]*(?:\n|\z))'
