@@ -3,4 +3,4 @@ message: "The frontmatter needs a name."
 level: error
 scope: raw
 min: 1
-token: '(?m)^name:[ \t]*\S'
+token: '(?m)^name:[ \t]*(?:\S|\n[ \t]+\S)'
