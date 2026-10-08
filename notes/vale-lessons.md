@@ -4,7 +4,7 @@ Each item cost at least one failed fixture. All measured on the Vale 3.23.0 that
 
 ## The markdown parser does most of the work
 
-nori-lint carries about 600 lines of hand-written scanning across its static rules: strip inline code spans, toggle a flag on every fence, skip `<good_example>` blocks, tell `![image](x)` from `[link](x)`, work out where the frontmatter ends. In Vale most of that is a `scope`. `bold-italics` is `scope: [strong, emphasis]` and one token. `description-action` is `scope: frontmatter.description`, which also means Vale parses the YAML first, so a `description: >-` block scalar is read as its value rather than as the two characters `>-`.
+nori-lint's `bold_italics` and `markdown_links` are about 630 lines of TypeScript between them, most of it scanning markdown by hand: strip inline code spans, toggle a flag on every fence, skip `<good_example>` blocks, tell `![image](x)` from `[link](x)`, work out where the frontmatter ends. In Vale most of that is a `scope`. `bold-italics` is `scope: [strong, emphasis]` and one token. `description-action` is `scope: frontmatter.description`, which also means Vale parses the YAML first, so a `description: >-` block scalar is read as its value rather than as the two characters `>-`.
 
 ## `occurrence` can't count a bare `\n`
 
@@ -20,4 +20,4 @@ The first `line-count` rule was `token: '\n'` with `max: 149`. It never fired, n
 
 ## `script` is the escape hatch, and it stays static
 
-Two rules need state across the document: `unclosed-tags` counts openings against closings per tag name, and `markdown-links` needs to know whether a line is inside a fence. Both are `extends: script` with a few dozen lines of Tengo. They're still Vale rules, so they run on every `check` with no login and no `--dangerously-run-scripts`, because Tengo runs inside Vale's sandbox rather than on the machine.
+Two rules need state across the document: `unclosed-tags` counts openings against closings per tag name, and `markdown-links` needs to know whether a line is inside a fence. Both are `extends: script` with a few dozen lines of Tengo. They're still Vale rules, which Taskless treats as static rules like any other, so they run on every `check` with no login and no `--dangerously-run-scripts`. A Taskless runtime rule, which runs TypeScript, needs both.
