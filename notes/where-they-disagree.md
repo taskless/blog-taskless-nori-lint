@@ -1,6 +1,6 @@
 # Where they disagree
 
-After the three fixes in the git history, nori-lint and Taskless differ on eight files across four rules. Each one was read by hand.
+After the 3 fixes in the git history, nori-lint and Taskless differ on 8 files across 4 rules. Each one was read by hand.
 
 ## `bold_italics`: one file only Taskless flags
 
@@ -14,7 +14,7 @@ After the three fixes in the git history, nori-lint and Taskless differ on eight
 
 `huggingface/skills` `huggingface-datasets` uses Windows line endings. nori-lint splits on `\n`, leaves the `\r` on each line, and `trimEnd()` removes it, so all 107 lines are reported. The file has no trailing spaces. For the same reason nori-lint can never see two blank lines in a row in a CRLF file, since each blank line is `"\r"` rather than `""`.
 
-## `description_action`: five files only nori-lint flags
+## `description_action`: 5 files only nori-lint flags
 
 Two use a YAML block scalar:
 

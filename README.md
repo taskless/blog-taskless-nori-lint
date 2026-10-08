@@ -1,10 +1,10 @@
 # taskless-and-nori-lint
 
-[nori-lint](https://github.com/tilework-tech/nori-lint) is an opinionated linter for `SKILL.md` files, written by the team at [Nori](https://noriagentic.com) and released under Apache-2.0. Its rules come from a clear point of view: a skill is read by an LLM, every wasted word costs context in every session, and a skill should be a short process with a checklist rather than a reference manual.
+[nori-lint](https://github.com/tilework-tech/nori-lint) is an opinionated linter for `SKILL.md` files, written by the team at [Nori](https://noriagentic.com) and released under Apache-2.0. Its rules come from a clear point of view: a skill is read by an LLM, every wasted word costs context in every session, and a skill should be a short process with a checklist.
 
-This repo rebuilds nori-lint's twelve static rules as [Taskless](https://taskless.io) rules, so they run in `taskless check` next to a team's other rules, on every commit and in CI. It then runs both tools over 365 public `SKILL.md` files and lines up what each one flags. What we learned along the way, including what didn't work, is in [`notes/`](notes/).
+This repo rebuilds nori-lint's 12 static rules as [Taskless](https://taskless.io) rules, so they run in `taskless check` next to a team's other rules, on every commit and in CI. It then runs both tools over 365 public `SKILL.md` files and lines up what each one flags. What we learned along the way, including what didn't work, is in [`notes/`](notes/).
 
-nori-lint's ten LLM rules (`obvious_instructions`, `negative_without_positive` and the rest) aren't ported. They ask a model for a judgment, and that's what nori-lint is for.
+nori-lint's 10 LLM rules (`obvious_instructions`, `negative_without_positive` and the rest) aren't ported. They ask a model for a judgment, and that's what nori-lint is for.
 
 ## Run it
 
@@ -21,7 +21,7 @@ npm run test:rules # the rules' own fixtures
 
 ## The rules
 
-All fifteen are Vale rules in `.taskless/rules/vale/`, scoped to `**/SKILL.md`. Thirteen are declarative. Two are short Tengo scripts, because they need to count or to know whether a line sits inside a code fence.
+All 15 are Vale rules in `.taskless/rules/vale/`, scoped to `**/SKILL.md`. 13 are declarative, and 2 are short Tengo scripts, because they need to count or to know whether a line sits inside a code fence.
 
 | nori-lint rule | Taskless rule | How |
 | --- | --- | --- |
@@ -59,7 +59,7 @@ Over 365 `SKILL.md` files from nine repositories, by file:
 | `unclosed_tags` | 257 | 257 | 257 | 0 | 0 |
 | `when_to_use` | 15 | 15 | 15 | 0 | 0 |
 
-Eight rules agree on every file. The eight files where they differ are explained one by one in [`notes/where-they-disagree.md`](notes/where-they-disagree.md). In each, the Taskless result matches what the file actually contains.
+8 rules agree on every file. The 8 files where they differ are explained one by one in [`notes/where-they-disagree.md`](notes/where-they-disagree.md). In each, the Taskless result matches what the file actually contains.
 
 ## The corpus
 

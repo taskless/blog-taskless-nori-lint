@@ -2,7 +2,7 @@
 # last line with no newline. A token of '\n' alone counts nothing, because
 # occurrence wraps a token in word boundaries and has no nonword switch.
 extends: occurrence
-message: "Over 150 lines. A skill is a short process, not a reference manual."
+message: "Over 150 lines. Keep a skill to a short process with a checklist."
 level: warning
 scope: raw
 max: 150

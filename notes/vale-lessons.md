@@ -8,7 +8,7 @@ nori-lint's `bold_italics` and `markdown_links` are about 630 lines of TypeScrip
 
 ## `occurrence` can't count a bare `\n`
 
-The first `line-count` rule was `token: '\n'` with `max: 149`. It never fired, not even with `max: 100` on a 151-line file. It behaves like a token made only of non-word characters getting word boundaries wrapped around it, the way an `existence` token does without `nonword: true`, and `occurrence` has no `nonword` field to turn that off. That's our reading of the behavior, not something we found in Vale's source. A token that consumes the line works: `(?:[^\n]*\n|[^\n]+\z)` counts exactly what nori-lint counts, including a last line with no newline.
+The first `line-count` rule was `token: '\n'` with `max: 149`. It never fired. With `max: 100` on a 151-line file it still didn't. It behaves like a token made only of non-word characters getting word boundaries wrapped around it, the way an `existence` token does without `nonword: true`, and `occurrence` has no `nonword` field to turn that off. That's our reading of the behavior. We didn't trace it in Vale's source. A token that consumes the line works: `(?:[^\n]*\n|[^\n]+\z)` counts exactly what nori-lint counts, including a last line with no newline.
 
 ## A lazy group still backtracks
 
