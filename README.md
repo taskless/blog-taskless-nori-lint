@@ -2,9 +2,9 @@
 
 [nori-lint](https://github.com/tilework-tech/nori-lint) is an opinionated linter for `SKILL.md` files, written by the team at [Nori](https://noriagentic.com) and released under Apache-2.0. Its rules come from a clear point of view: a skill is read by an LLM, every wasted word costs context in every session, and a skill should be a short process with a checklist.
 
-This repo rebuilds nori-lint's 12 static rules as [Taskless](https://taskless.io) rules, so they run in `taskless check` next to a team's other rules, on every commit and in CI. It then runs both tools over 365 public `SKILL.md` files and lines up what each one flags. What we learned along the way, including what didn't work, is in [`notes/`](notes/).
+This repo rebuilds nori-lint's 12 static rules as [Taskless](https://taskless.io) rules, so they run in `taskless check` next to a team's other rules, on every commit and in CI. It adds 2 rules from Anthropic's skill authoring guidance that nori-lint doesn't have. It then runs both tools over 365 public `SKILL.md` files and lines up what each one flags. What we learned along the way, including what didn't work, is in [`notes/`](notes/).
 
-nori-lint's 10 LLM rules (`obvious_instructions`, `negative_without_positive` and the rest) aren't ported. They ask a model for a judgment, and that's what nori-lint is for.
+This repo is about static analysis: checks that give the same answer every time they run. nori-lint's 10 LLM rules (`obvious_instructions`, `negative_without_positive` and the rest) ask a model for a judgment, so they aren't ported.
 
 ## Run it
 
@@ -21,7 +21,7 @@ npm run test:rules # the rules' own fixtures
 
 ## The rules
 
-All 15 are Vale rules in `.taskless/rules/vale/`, scoped to `**/SKILL.md`. 13 are declarative, and 2 are short Tengo scripts, because they need to count or to know whether a line sits inside a code fence.
+All 17 are Vale rules in `.taskless/rules/vale/`, scoped to `**/SKILL.md`. 15 are declarative, and 2 are short Tengo scripts, because they need to count or to know whether a line sits inside a code fence.
 
 | nori-lint rule | Taskless rule | How |
 | --- | --- | --- |
@@ -37,6 +37,13 @@ All 15 are Vale rules in `.taskless/rules/vale/`, scoped to `**/SKILL.md`. 13 ar
 | `trailing_whitespace` | `trailing-whitespace` | `existence`, raw |
 | `unclosed_tags` | `unclosed-tags` | `script` |
 | `when_to_use` | `when-to-use` | `existence` over `heading` |
+
+2 more rules check what [Anthropic's skill authoring best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) require and nori-lint doesn't:
+
+| Taskless rule | What it checks | How |
+| --- | --- | --- |
+| `description-no-tags` | The description holds no XML tags. The spec forbids them, since the description is loaded into the system prompt | `existence` over `frontmatter.description` |
+| `forward-slash-paths` | File paths use forward slashes. A backslash path breaks on macOS and Linux | `existence`, raw |
 
 Two checks inside nori-lint's `frontmatter` rule aren't ported: `compatibility` over 500 characters, and `metadata` that isn't a map. Neither fires anywhere in the corpus.
 
@@ -60,6 +67,15 @@ Over 365 `SKILL.md` files from nine repositories, by file:
 | `when_to_use` | 15 | 15 | 15 | 0 | 0 |
 
 8 rules agree on every file. The 8 files where they differ are explained one by one in [`notes/where-they-disagree.md`](notes/where-they-disagree.md). In each, the Taskless result matches what the file actually contains.
+
+The 2 rules nori-lint doesn't have:
+
+| Taskless rule | Files flagged | Findings |
+| --- | --- | --- |
+| `description-no-tags` | 4 | 4 |
+| `forward-slash-paths` | 7 | 27 |
+
+`node scripts/compare.mjs --diff <rule>` lists the files for either one. Every finding was read by hand, and each is what the rule describes. See [`notes/beyond-nori-lint.md`](notes/beyond-nori-lint.md).
 
 ## The corpus
 

@@ -2,7 +2,9 @@
 // files, then line up which files each one flags, rule by rule.
 //
 //   node scripts/compare.mjs [dir]        default: corpus/skills
-//   node scripts/compare.mjs --diff rule  list the files the two disagree on
+//   node scripts/compare.mjs --diff rule  list the files the two disagree on,
+//                                         or, for a rule only Taskless has, the
+//                                         files it flags
 //
 // nori-lint runs in-process through its library export, once per file, so
 // files under dot-directories (.claude/skills, .github/skills) are included.
@@ -36,6 +38,10 @@ const PORT = {
   "when-to-use": "when_to_use",
 };
 
+// Rules nori-lint doesn't have. Both come from Anthropic's skill authoring
+// best practices.
+const EXTRA = ["description-no-tags", "forward-slash-paths"];
+
 const files = globSync("**/SKILL.md", { cwd: root, dot: true }).sort();
 
 // nori-lint: every static rule on every file.
@@ -66,7 +72,14 @@ const report = JSON.parse(out);
 if (report.failures) throw new Error(`taskless check failed: ${JSON.stringify(report.failures)}`);
 
 const taskless = new Map(); // nori rule name -> Map(file -> findings)
+const extra = new Map(EXTRA.map((id) => [id, new Map()])); // Taskless rule id -> Map(file -> findings)
 for (const r of report.results) {
+  if (extra.has(r.ruleId)) {
+    const m = extra.get(r.ruleId);
+    const rel = path.relative(root, r.file);
+    m.set(rel, (m.get(rel) ?? 0) + 1);
+    continue;
+  }
   const name = PORT[r.ruleId];
   if (!name) continue;
   const rel = path.relative(root, r.file);
@@ -75,6 +88,10 @@ for (const r of report.results) {
   m.set(rel, (m.get(rel) ?? 0) + 1);
 }
 
+if (diffRule && extra.has(diffRule)) {
+  for (const [f, n] of extra.get(diffRule)) console.log(`${String(n).padStart(3)}  ${f}`);
+  process.exit(0);
+}
 if (diffRule) {
   const a = nori.get(diffRule) ?? new Map();
   const b = taskless.get(diffRule) ?? new Map();
@@ -97,6 +114,12 @@ console.log("| nori-lint rule | Files nori-lint flags | Files Taskless flags | B
 console.log("| --- | --- | --- | --- | --- | --- |");
 for (const r of rows) {
   console.log(`| \`${r.name}\` | ${r.nori} | ${r.taskless} | ${r.both} | ${r.noriOnly} | ${r.tasklessOnly} |`);
+}
+console.log("\n| Taskless rule nori-lint doesn't have | Files flagged | Findings |");
+console.log("| --- | --- | --- |");
+for (const [id, m] of extra) {
+  const findings = [...m.values()].reduce((a, b) => a + b, 0);
+  console.log(`| \`${id}\` | ${m.size} | ${findings} |`);
 }
 const agree = rows.filter((r) => r.noriOnly === 0 && r.tasklessOnly === 0).length;
 console.log(`\n${agree} of ${rows.length} rules agree on every file.`);
