@@ -3,7 +3,7 @@ name: demo-skill
 description: Use when demonstrating a rule.
 ---
 
-See [the spec](https://agentskills.io/specification) for details.
+Read [references/tools.md](references/tools.md) next.
 
 <required>
 - Read the diff first.
