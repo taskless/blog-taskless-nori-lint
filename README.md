@@ -63,19 +63,21 @@ Over 365 `SKILL.md` files from nine repositories, by file:
 
 ## The corpus
 
-`corpus/repos.txt` pins each repository to a commit. `corpus/fetch.sh` keeps only the `SKILL.md` files and writes them to `corpus/skills/`, which is gitignored, since the files belong to their authors.
+Every skill in the corpus was written and published by the teams and people in the table below. Thank you for sharing them.
 
-| Repository | Skills |
-| --- | --- |
-| anthropics/skills | 20 |
-| anthropics/claude-code | 10 |
-| anthropics/claude-plugins-official | 33 |
-| obra/superpowers | 15 |
-| openai/skills | 44 |
-| microsoft/skills | 205 |
-| huggingface/skills | 26 |
-| vercel-labs/agent-skills | 9 |
-| tilework-tech/nori-skillsets | 3 |
+`corpus/repos.txt` pins each repository to a commit. `corpus/fetch.sh` downloads them at run time, keeps only the `SKILL.md` files and writes them to `corpus/skills/`, which is gitignored. Nothing from the corpus is committed here, and every skill stays under its own repository's license. `notes/` quotes one line of `huggingface-best` to show a parsing case.
+
+| Repository | Pinned commit | Skills | License at the repository root |
+| --- | --- | --- | --- |
+| [anthropics/skills](https://github.com/anthropics/skills) | [`683bc88`](https://github.com/anthropics/skills/tree/683bc88e56f3e09ba94f7055977f3d3aa499f202) | 20 | none at root, see the repository |
+| [anthropics/claude-code](https://github.com/anthropics/claude-code) | [`79babc3`](https://github.com/anthropics/claude-code/tree/79babc372d64101f981bd2b52c3dbe588596dc56) | 10 | none at root, see the repository |
+| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | [`b78ac49`](https://github.com/anthropics/claude-plugins-official/tree/b78ac49cdc6b3d7b61c4439470e311f4291265b1) | 33 | Apache-2.0 |
+| [obra/superpowers](https://github.com/obra/superpowers) | [`8ca22db`](https://github.com/obra/superpowers/tree/8ca22dba9a94f28898bbce59f2537ff4d87c747d) | 15 | MIT |
+| [openai/skills](https://github.com/openai/skills) | [`49f948f`](https://github.com/openai/skills/tree/49f948faa9258a0c61caceaf225e179651397431) | 44 | none at root, see the repository |
+| [microsoft/skills](https://github.com/microsoft/skills) | [`354361d`](https://github.com/microsoft/skills/tree/354361d83247c76a1c21e802e0d4887c4d8323a3) | 205 | MIT |
+| [huggingface/skills](https://github.com/huggingface/skills) | [`ca0325b`](https://github.com/huggingface/skills/tree/ca0325bb20b2d0a1b2efa893670c4c72f79e707b) | 26 | Apache-2.0 |
+| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | [`063bee9`](https://github.com/vercel-labs/agent-skills/tree/063bee94c3f4df8453406c830b0a7df0f2860278) | 9 | none at root, see the repository |
+| [tilework-tech/nori-skillsets](https://github.com/tilework-tech/nori-skillsets) | [`1c0bd9f`](https://github.com/tilework-tech/nori-skillsets/tree/1c0bd9f897189d6e4afaf6d52d4e5a6a24f9c133) | 3 | Apache-2.0 |
 
 251 of the 365 live under a dot-directory such as `.github/skills/` or `.curated/`. `scripts/compare.mjs` runs nori-lint through its library export, once per file, so they're all included. See [`notes/dot-directories.md`](notes/dot-directories.md) for why that matters.
 
